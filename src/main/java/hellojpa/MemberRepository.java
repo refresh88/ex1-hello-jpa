@@ -2,7 +2,10 @@ package hellojpa;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
+import jakarta.persistence.TypedQuery;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public class MemberRepository {
@@ -16,5 +19,11 @@ public class MemberRepository {
 
     public Member findOne(Long id) {
         return em.find(Member.class, id);
+    }
+    
+    public List<Member> findAll() {
+        List<Member> result = em.createQuery("select m from Member as m", Member.class)
+                .getResultList();
+        return result;
     }
 }
