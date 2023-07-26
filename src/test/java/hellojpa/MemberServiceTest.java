@@ -13,7 +13,6 @@ import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
-@Rollback(value = false)
 public class MemberServiceTest {
 
     @Autowired
@@ -64,10 +63,6 @@ public class MemberServiceTest {
 
     @Test
     void 변경감지() {
-        // member 생성
-        Member member1 = new Member(150L, "A");
-        em.persist(member1);
-
         //변경
         Member member = em.find(Member.class, 150L);
         member.setName("ZZZZZ");
