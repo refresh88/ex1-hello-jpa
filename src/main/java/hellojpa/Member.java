@@ -7,23 +7,21 @@ import lombok.Setter;
 import java.util.Date;
 
 @Entity
+@Getter
+@Setter
+@SequenceGenerator(
+        name = "MEMBER_SEQ_GENERATOR",
+        sequenceName = "MEMBER_SEQ",
+        initialValue = 1, allocationSize = 50) // 메모리에 시퀀스를 미리 50개 생성해놓고 갖다 쓰는것. cache랑 비슷한 개념.
 public class Member {
 
     @Id
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.SEQUENCE,
+            generator = "MEMBER_SEQ_GENERATOR")
+    private int id;
 
-    @Column(name = "name")
+    @Column(name = "name", nullable = false)
     private String username;
-    private Integer age;
-    //Enum 타입이 없을수 있으니 Enumerated 애노테이션을 통해 String으로 인식.
-    @Enumerated(EnumType.STRING)
-    private RoleType roleType;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date createdDate;
-    @Temporal(TemporalType.TIMESTAMP)
-    private Date lastModifiedDate;
-    @Lob
-    private String description;
 
     protected Member() {
     }
